@@ -61,11 +61,9 @@ class ExpenseController extends Controller
     public function edit(string $id)
     {
         $expense = Expense::find($id);
-        $categories = Category::all();
         $expense->load('category');
         return Inertia::render('Expense/edit', [
             'expense' => $expense,
-            'categories' => $categories,
         ]);
     }
 
