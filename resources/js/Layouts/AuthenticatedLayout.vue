@@ -31,17 +31,14 @@ onMounted(() => {
         sidebarExpanded.value = savedSidebarState === 'true';
     }
 
-    // Corrección: Llamar a setThemeOnLoad para sincronizar el tema
     setThemeOnLoad();
 
-    // Detectar el tema inicial
     if (
         localStorage.theme === 'dark' ||
         (!('theme' in localStorage) &&
             window.matchMedia('(prefers-color-scheme: dark)').matches)
     ) {
         isDark.value = true;
-        // Si el tema es oscuro, aplicar la clase dark al html
         document.documentElement.classList.add('dark');
     } else {
         isDark.value = false;
@@ -49,11 +46,11 @@ onMounted(() => {
     }
 });
 
-// Función para cambiar el tema
 const toggleTheme = () => {
     switchTheme();
     isDark.value = !isDark.value;
 };
+
 </script>
 
 <template>
