@@ -34,6 +34,7 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
         ]);
         $validated['user_id'] = Auth::id();
         Category::create($validated);
@@ -46,7 +47,6 @@ class CategoryController extends Controller
     public function show(string $id)
     {
         $category = Category::find($id);
-        $category->load('expense.user');
         return Inertia::render('Category/show', [
             'category' => $category,
         ]);
@@ -69,6 +69,7 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
         ]);
         $validated['user_id'] = Auth::id();
         $category = Category::find($id);

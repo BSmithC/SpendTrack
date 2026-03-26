@@ -60,7 +60,7 @@ const toggleTheme = () => {
                 class="hidden sm:flex flex-col h-screen fixed left-0 top-0 bottom-0 border-r dark:border-gray-700 shadow-md transition-all duration-300 ease-in-out z-20 bg-white dark:bg-gray-800"
                 :class="{ 'w-64': sidebarExpanded, 'w-20': !sidebarExpanded }">
 
-                <div class="bg-gray-800 dark:bg-gray-900 h-16 border-b dark:border-gray-700 flex items-center px-4" :class="{
+                <div class="dark:text-gray--800 dark:text-gray--900 h-16 border-b dark:border-gray-700 flex items-center px-4" :class="{
                     'justify-between': sidebarExpanded,
                     'justify-center': !sidebarExpanded
                 }">
@@ -73,7 +73,7 @@ const toggleTheme = () => {
 
                         <!-- Logo Text (only shows when expanded) -->
                         <div v-if="sidebarExpanded" class="transition-all duration-300">
-                            <h1 class="text-lg font-bold text-white dark:text-white leading-tight">
+                            <h1 class="text-lg font-bold dark:text-gray-100 dark:text-white leading-tight">
                                 Spend<span class="text-purple-600">Track</span>
                             </h1>
                             <p class="text-xs text-gray-400 dark:text-gray-400">
@@ -94,7 +94,7 @@ const toggleTheme = () => {
                             { 'justify-center': !sidebarExpanded }
                         ]">
                             <HomeIcon :class="route().current('dashboard') ? 'text-white' : 'text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400'" class="h-5 w-5" />
-                            <span v-if="sidebarExpanded" class="ml-3" :class="route().current('dashboard') ? 'text-white' : ''">Inicio</span>
+                            <span v-if="sidebarExpanded" class="ml-3" :class="route().current('dashboard') ? 'text-white' : ''">Dashboard</span>
                         </Link>
                     </div>
 
@@ -107,7 +107,7 @@ const toggleTheme = () => {
                             { 'justify-center': !sidebarExpanded }
                         ]">
                             <ProductIcon :class="route().current('Expense.index') || route().current('Expense.create') || route().current('Expense.edit') || route().current('Expense.show') ? 'text-white' : 'text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400'" class="h-5 w-5" />
-                            <span v-if="sidebarExpanded" class="truncate ml-3" :class="route().current('Expense.index') || route().current('Expense.create') || route().current('Expense.edit') || route().current('Expense.show') ? 'text-white' : ''">Productos</span>
+                            <span v-if="sidebarExpanded" class="truncate ml-3" :class="route().current('Expense.index') || route().current('Expense.create') || route().current('Expense.edit') || route().current('Expense.show') ? 'text-white' : ''">Expenses</span>
                         </Link>
                     </div>
 
@@ -120,7 +120,7 @@ const toggleTheme = () => {
                             { 'justify-center': !sidebarExpanded }
                         ]">
                             <CategoryIcon :class="route().current('Category.index') || route().current('Category.create') || route().current('Category.edit') || route().current('Category.show') ? 'text-white' : 'text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400'" class="h-5 w-5" />
-                            <span v-if="sidebarExpanded" class="truncate ml-3" :class="route().current('Category.index') || route().current('Category.create') || route().current('Category.edit') || route().current('Category.show') ? 'text-white' : ''">Categorías</span>
+                            <span v-if="sidebarExpanded" class="truncate ml-3" :class="route().current('Category.index') || route().current('Category.create') || route().current('Category.edit') || route().current('Category.show') ? 'text-white' : ''">Categories</span>
                         </Link>
                     </div>
                 </div>
@@ -174,15 +174,15 @@ const toggleTheme = () => {
                         class="sm:hidden">
                         <div class="pt-2 pb-3 space-y-1">
                             <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                Inicio
+                                Dashboard
                             </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('Expense.index')"
                                 :active="route().current('Expense.index')">
-                                Productos
+                                Expense
                             </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('Category.index')"
                                 :active="route().current('Category.index')">
-                                Categorías
+                                Category
                             </ResponsiveNavLink>
                         </div>
                         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-700">
@@ -252,13 +252,13 @@ const toggleTheme = () => {
 
                 <!-- Page Heading -->
                 <header class="bg-white shadow dark:bg-gray-800" v-if="$slots.header">
-                    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                    <div class="flex items-center px-4 py-6 sm:px-6 lg:px-8">
                         <slot name="header" />
                     </div>
                 </header>
 
                 <!-- Page Content -->
-                <main class="flex-1 transition-all duration-300">
+                <main class="flex-1  transition-all duration-300">
                     <slot />
                 </main>
             </div>

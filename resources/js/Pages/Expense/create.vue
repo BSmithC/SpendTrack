@@ -1,65 +1,52 @@
 <template>
     <AuthenticatedLayout>
         <template #header>
-
+            <h2 class="text-lg text-gray-800">
+                Create Expense
+            </h2>
         </template>
         <template #default>
-            <form @submit.prevent="submit">
-                <div class="space-y-12">
-                    <div class="border-b border-white/10 pb-12">
+            <div class="p-6 max-w-4xl mx-auto ">
+                <form @submit.prevent="submit">
+                    <div class="rounded-xl border-foregroundbg-background p-6 space-y-6">
 
-                        <div class=" mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                            <div class="sm:col-span-4">
-                                <label for="username" class="block text-sm/6 font-medium text-white">Title</label>
-                                <div class="mt-2">
-                                    <div
-                                        class="flex items-center rounded-md bg-white/5 pl-3 outline-1 -outline-offset-1 outline-white/10 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                                        <input type="text" v-model="form.title"
-                                            class="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 text-base text-white placeholder:text-gray-500 focus:outline-none sm:text-sm/6"
-                                            placeholder="janesmith" />
-                                    </div>
-                                </div>
-                            </div>
-                               <div class="sm:col-span-2">
-                                <label for="username" class="block text-sm/6 font-medium text-white">Date</label>
-                                <div class="mt-2">
-                                    <div
-                                        class="flex items-center rounded-md bg-white/5 pl-3 outline-1 -outline-offset-1 outline-white/10 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                                        <input type="date" v-model="form.date"
-                                            class="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 text-base text-white placeholder:text-gray-500 focus:outline-none sm:text-sm/6"
-                                            placeholder="janesmith" />
-                                    </div>
-                                </div>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <Label for="name">Name<span class="text-red-500"> *</span></Label>
+                                <Input id="name" v-model="form.name" type="text" placeholder="Name" />
+                                <InputError :message="form.errors.name" />
                             </div>
 
-                            <div class="col-span-full">
-                                <label for="about" class="block text-sm/6 font-medium text-white">Amount</label>
-                                <div class="mt-2">
-                                    <input type="number" v-model="form.amount"
-                                        class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></input>
-                                </div>
-                                <p class="mt-3 text-sm/6 text-gray-400">Write a few sentences about yourself.</p>
+                            <div>
+                                <Label for="description">Description<span class="text-red-500"> *</span></Label>
+                                <Textarea id="description" v-model="form.description" type="text"
+                                    placeholder="Detalles de la description..." />
+                                <InputError :message="form.errors.description" />
                             </div>
-                            <select v-model="form.category_id">
-                                <option v-for="category in categories" :key="category.id" :value="category.id">
-                                    {{ category.name}}
-                                </option>
-                            </select>
-
                         </div>
                     </div>
-                </div>
 
-                <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <button type="button" class="text-sm/6 font-semibold text-white">Cancel</button>
-                    <button type="submit"
-                        class="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Save</button>
-                </div>
-            </form>
+                    <div class="mt-6 flex items-center justify-end gap-x-6">
+                        <Button class="bg-gray-100" type="submit">
+                            Save
+                        </Button>
+                        <Button class="bg-gray-100">
+                            <Link :href="route('Expense.index')">
+                            Cancel
+                            </Link>
+                        </Button>
+                    </div>
+                </form>
+            </div>
         </template>
     </AuthenticatedLayout>
 </template>
 <script>
+import InputError from '@/Components/InputError.vue';
+import Button from '@/Components/ui/button/Button.vue';
+import Input from '@/Components/ui/input/Input.vue';
+import Label from '@/Components/ui/label/Label.vue';
+import Textarea from '@/Components/ui/textarea/Textarea.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
@@ -69,17 +56,17 @@ export default {
         AuthenticatedLayout,
         Head,
         Link,
-    },
-    props: {
-        categories: Object,
+        Button,
+        InputError,
+        Label,
+        Textarea,
+        Input
     },
     data() {
         return {
             form: useForm({
-                category_id: '',
-                title: '',
-                amount: '',
-                date: '',
+                name: '',
+                description: '',
             })
         };
     },

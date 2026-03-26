@@ -2,23 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Expense;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
-use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+
+use function Illuminate\Log\log;
 
 class ExpenseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Expense::query();
+
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', "{$request->search}")
+                    ->orWhere('description', 'like'."{$request->search}");
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
         $expense = Expense::all();
-        return Inertia::render('Expense/index', ['expenses' => $expense]);
+
+        return Inertia::render('Expense/index', [
+            'expenses' => $expense,
+            'filled' => $request->only(['search', 'status']),
+        ]);
     }
 
     /**
@@ -26,8 +42,7 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return Inertia::render('Expense/create', ['categories' => $categories]);
+        return Inertia::render('Expense/create');
     }
 
     /**
@@ -36,12 +51,9 @@ class ExpenseController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'category_id' => 'required|numeric|exists:categories,id',
-            'title' => 'required|string|max:255',
-            'amount' => 'required|numeric',
-            'date' => 'required|date',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
         ]);
-        $validated['user_id'] = Auth::id();
         Expense::create($validated);
         return redirect()->route('Expense.index');
     }
@@ -61,7 +73,7 @@ class ExpenseController extends Controller
     public function edit(string $id)
     {
         $expense = Expense::find($id);
-        $expense->load('category');
+
         return Inertia::render('Expense/edit', [
             'expense' => $expense,
         ]);
@@ -73,14 +85,12 @@ class ExpenseController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
-            'category_id' => 'required|numeric|exists:categories,id',
-            'title' => 'required|string|max:255',
-            'amount' => 'required|numeric',
-            'date' => 'required|date',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
         ]);
-        $validated['user_id'] = Auth::id();
         $expense = Expense::find($id);
         $expense->update($validated);
+
         return redirect()->route('Expense.index');
     }
 

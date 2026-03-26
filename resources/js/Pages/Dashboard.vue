@@ -5,7 +5,6 @@ import { computed } from 'vue'
 
 const props = defineProps({
     kpis: Object,
-    expensesByCategory: Array,
 })
 const series = computed(() => [{
     data: props.expensesByCategory.map(item => ({
@@ -85,7 +84,6 @@ const formatCurrency = (value) => {
                             Total Expenses
                         </p>
                         <p class="text-2xl font-bold text-green-900 dark:text-white">
-                            {{ formatCurrency(kpis.totalExpenses) }}
                         </p>
                     </div>
 
@@ -95,7 +93,6 @@ const formatCurrency = (value) => {
                             Expenses Count
                         </p>
                         <p class="text-2xl font-bold text-green-900 dark:text-white">
-                            {{ kpis.expensesCount }}
                         </p>
                     </div>
 
@@ -105,7 +102,6 @@ const formatCurrency = (value) => {
                             Categories
                         </p>
                         <p class="text-2xl font-bold text-yellow-900 dark:text-white">
-                            {{ kpis.categoriesCount }}
                         </p>
                     </div>
 
@@ -115,7 +111,6 @@ const formatCurrency = (value) => {
                             Expenses This Month
                         </p>
                         <p class="text-2xl font-bold text-green-900 dark:text-white">
-                            {{ formatCurrency(kpis.expensesThisMonth) }}
                         </p>
                     </div>
 

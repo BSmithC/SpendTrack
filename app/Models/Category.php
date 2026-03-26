@@ -10,6 +10,7 @@ class Category extends Model
         'user_id',
         'name',
         'description',
+        'type',
         'status',
     ];
     public function Expense()
