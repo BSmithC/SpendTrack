@@ -4,7 +4,7 @@
             <div v-if="flash?.success" class="bg-green-800 text-white p-5 rounded mb-2">
                 {{ flash.success }}
             </div>
-            <h2 class="text-lg text-gray-900">
+            <h2 class="text-xl font-semibold">
                 Expenses
             </h2>
             <Button class="ml-auto text-gray-700 bg-gray-50 border-b-2 border-gray-200">
@@ -43,7 +43,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody v-for="expense in expenses">
+                        <tbody v-for="expense in expenses.data">
                             <tr class="bg-white">
                                 <th class="p-3 text-sm text-gray-700">
                                     {{ expense.id }}
@@ -55,7 +55,7 @@
                                     {{ expense.description }}
                                 </td>
                                 <td class="p-3 text-sm text-gray-700">
-                                    {{ expense.created_at.slice(0,10) }}
+                                    {{ expense.created_at.slice(0, 10) }}
                                 </td>
                                 <td class="p-3 text-sm text-gray-700">
                                     <span class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium"
@@ -81,6 +81,56 @@
                         </tbody>
                     </table>
                 </div>
+                <div v-if="expenses.total > expenses.per_page" class="flex items-center justify-between px-4 py-4">
+                    <!-- Texto -->
+                    <p class="text-sm text-muted-foreground">
+                        Mostrando
+                        <strong>{{ expenses.from }}</strong>
+                        a
+                        <strong>{{ expenses.to }}</strong>
+                        de
+                        <strong>{{ expenses.total }}</strong>
+                        resultados
+                    </p>
+                    <!-- Controles -->
+                    <div class="flex items-center gap-1">
+
+                        <!-- First -->
+                        <Button size="sm" variant="outline" as-child :disabled="expenses.current_page === 1">
+                            <Link :href="expenses.first_page_url" preserve-scroll>
+                            «
+                            </Link>
+                        </Button>
+
+                        <!-- Prev -->
+                        <Button size="sm" variant="outline" as-child :disabled="!expenses.prev_page_url">
+                            <Link v-if="expenses.prev_page_url" :href="expenses.prev_page_url" preserve-scroll>
+                            ‹
+                            </Link>
+                        </Button>
+
+                        <!-- Pages -->
+                        <Button v-for="link in expenses.links.slice(1, -1)" :key="link.label" size="sm"
+                            :variant="link.active ? 'default' : 'outline'" as-child>
+                            <Link v-if="link.url" :href="link.url" preserve-scroll v-html="link.label" />
+                        </Button>
+
+                        <!-- Next -->
+                        <Button size="sm" variant="outline" as-child :disabled="!expenses.next_page_url">
+                            <Link v-if="expenses.next_page_url" :href="expenses.next_page_url" preserve-scroll>
+                            ›
+                            </Link>
+                        </Button>
+
+                        <!-- Last -->
+                        <Button size="sm" variant="outline" as-child
+                            :disabled="expenses.current_page === expenses.last_page">
+                            <Link :href="expenses.last_page_url" preserve-scroll>
+                            »
+                            </Link>
+                        </Button>
+                    </div>
+                </div>
             </div>
         </template>
     </AuthenticatedLayout>
@@ -91,6 +141,7 @@ import AddIcon from '@/Components/Icons/AddIcon.vue';
 import EditIcon from '@/Components/Icons/EditIcon.vue';
 import EyeIcon from '@/Components/Icons/EyeIcon.vue';
 import Button from '@/Components/ui/button/Button.vue';
+import { Pagination } from '@/Components/ui/pagination';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -102,10 +153,12 @@ export default {
         EditIcon,
         Button,
         EyeIcon,
-        AddIcon
+        AddIcon,
+        Pagination
     },
     props: {
         expenses: Object,
+        filter: Object,
     },
     data() {
         return {

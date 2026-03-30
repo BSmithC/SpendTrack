@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('budget_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('budget_id');
-            $table->string('amount');
-            $table->string('total');
-            $table->string('quantity');
+            $table->decimal('amount');
+            $table->decimal('total');
+            $table->decimal('quantity');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

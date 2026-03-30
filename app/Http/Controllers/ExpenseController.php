@@ -20,8 +20,9 @@ class ExpenseController extends Controller
 
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', "{$request->search}")
-                    ->orWhere('description', 'like'."{$request->search}");
+                $q->where('name', 'like', "%{$request->search}%")
+                    ->orWhere('description', 'like'."%{$request->search}%")
+                    ->orWhere('created_at', 'like'."%{$request->search}%");
             });
         }
 
@@ -29,7 +30,7 @@ class ExpenseController extends Controller
             $query->where('status', $request->status);
         }
 
-        $expense = Expense::all();
+        $expense = $query->latest()->paginate(10);
 
         return Inertia::render('Expense/index', [
             'expenses' => $expense,
@@ -99,6 +100,7 @@ class ExpenseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $expense = Expense::findOrFail($id);
+        $expense->delete();
     }
 }

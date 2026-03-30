@@ -16,6 +16,6 @@ class BudgetDetail extends Model
 
     public function budget()
     {
-        return $this->hasMany(Budget::class);
+        return $this->belongsTo(Budget::class);
     }
 }

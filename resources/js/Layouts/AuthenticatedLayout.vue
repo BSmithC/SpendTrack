@@ -15,6 +15,8 @@ import SidebarIcon from '@/Components/Icons/SidebarIcon.vue';
 import SidebarFilledIcon from '@/Components/Icons/SidebarFilledIcon.vue';
 import LightIcon from '@/Components/Icons/LightIcon.vue';
 import DarkIcon from '@/Components/Icons/DarkIcon.vue';
+import DocumentIcon from '@/Components/Icons/DocumentIcon.vue';
+import DocumentMoney from '@/Components/Icons/DocumentMoney.vue';
 
 const isDark = ref(false);
 const sidebarExpanded = ref(true);
@@ -66,7 +68,7 @@ const toggleTheme = () => {
                 }">
                     <Link :href="route('dashboard')" class="flex items-center gap-3">
                         <!-- Logo Icon -->
-                        <div class="flex items-center justify-center rounded-lg bg-purple-600 transition-all duration-300"
+                        <div class="flex items-center justify-center rounded-lg bg-emerald-600 transition-all duration-300"
                             :class="sidebarExpanded ? 'h-10 w-10' : 'h-8 w-8'">
                             <CashIcon class="text-white" :class="sidebarExpanded ? 'h-6 w-6' : 'h-4 w-4'" />
                         </div>
@@ -74,7 +76,7 @@ const toggleTheme = () => {
                         <!-- Logo Text (only shows when expanded) -->
                         <div v-if="sidebarExpanded" class="transition-all duration-300">
                             <h1 class="text-lg font-bold dark:text-gray-100 dark:text-white leading-tight">
-                                Spend<span class="text-purple-600">Track</span>
+                                Spend<span class="text-emerald-600">Track</span>
                             </h1>
                             <p class="text-xs text-gray-400 dark:text-gray-400">
                                 Sistema de Gestión De Gasto Personales
@@ -84,43 +86,61 @@ const toggleTheme = () => {
                 </div>
 
                 <!-- Navigation Links -->
+
+                 <!-- Dashboard -->
                 <div class="flex-1 overflow-y-auto py-6 space-y-1">
                     <div class="px-3">
                         <Link :href="route('dashboard')" :class="[
                             route().current('dashboard')
-                                ? 'bg-purple-600 text-white font-semibold'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-purple-600 dark:hover:text-purple-400',
+                                ? 'bg-emerald-600 text-white font-semibold'
+                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-emerald-600 dark:hover:text-emerald-400',
                             'group flex items-center px-3 py-3 text-sm rounded-md transition-all',
                             { 'justify-center': !sidebarExpanded }
                         ]">
-                            <HomeIcon :class="route().current('dashboard') ? 'text-white' : 'text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400'" class="h-5 w-5" />
+                            <HomeIcon :class="route().current('dashboard') ? 'text-white' : 'text-gray-700 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400'" class="h-5 w-5" />
                             <span v-if="sidebarExpanded" class="ml-3" :class="route().current('dashboard') ? 'text-white' : ''">Dashboard</span>
                         </Link>
                     </div>
 
+                    <!-- Expense -->
                     <div class="px-3">
                         <Link :href="route('Expense.index')" :class="[
                             route().current('Expense.index') || route().current('Expense.create') || route().current('Expense.edit') || route().current('Expense.show')
-                                ? 'bg-purple-600 text-white font-semibold'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-purple-600 dark:hover:text-purple-400',
+                                ? 'bg-emerald-600 text-white font-semibold'
+                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-emerald-600 dark:hover:text-emerald-400',
                             'group flex items-center px-3 py-3 text-sm rounded-md transition-all',
                             { 'justify-center': !sidebarExpanded }
                         ]">
-                            <ProductIcon :class="route().current('Expense.index') || route().current('Expense.create') || route().current('Expense.edit') || route().current('Expense.show') ? 'text-white' : 'text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400'" class="h-5 w-5" />
+                            <ProductIcon :class="route().current('Expense.index') || route().current('Expense.create') || route().current('Expense.edit') || route().current('Expense.show') ? 'text-white' : 'text-gray-700 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400'" class="h-5 w-5" />
                             <span v-if="sidebarExpanded" class="truncate ml-3" :class="route().current('Expense.index') || route().current('Expense.create') || route().current('Expense.edit') || route().current('Expense.show') ? 'text-white' : ''">Expenses</span>
                         </Link>
                     </div>
 
+                    <!-- Category -->
                     <div class="px-3">
                         <Link :href="route('Category.index')" :class="[
                             route().current('Category.index') || route().current('Category.create') || route().current('Category.edit') || route().current('Category.show')
-                                ? 'bg-purple-600 text-white font-semibold'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-purple-600 dark:hover:text-purple-400',
+                                ? 'bg-emerald-600 text-white font-semibold'
+                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-emerald-600 dark:hover:text-emerald-400',
                             'group flex items-center px-3 py-3 text-sm rounded-md transition-all',
                             { 'justify-center': !sidebarExpanded }
                         ]">
-                            <CategoryIcon :class="route().current('Category.index') || route().current('Category.create') || route().current('Category.edit') || route().current('Category.show') ? 'text-white' : 'text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400'" class="h-5 w-5" />
+                            <CategoryIcon :class="route().current('Category.index') || route().current('Category.create') || route().current('Category.edit') || route().current('Category.show') ? 'text-white' : 'text-gray-700 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400'" class="h-5 w-5" />
                             <span v-if="sidebarExpanded" class="truncate ml-3" :class="route().current('Category.index') || route().current('Category.create') || route().current('Category.edit') || route().current('Category.show') ? 'text-white' : ''">Categories</span>
+                        </Link>
+                    </div>
+
+                    <!-- Budget -->
+                    <div class="px-3">
+                        <Link :href="route('Budget.index')" :class="[
+                            route().current('Budget.index') || route().current('Budget.create') || route().current('Budget.edit') || route().current('Budget.show')
+                                ? 'bg-emerald-600 text-white font-semibold'
+                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-emerald-600 dark:hover:text-emerald-400',
+                            'group flex items-center px-3 py-3 text-sm rounded-md transition-all',
+                            { 'justify-center': !sidebarExpanded }
+                        ]">
+                            <DocumentMoney :class="route().current('Budget.index') || route().current('Budget.create') || route().current('Budget.edit') || route().current('Budget.show') ? 'text-white' : 'text-gray-700 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400'" class="h-5 w-5" />
+                            <span v-if="sidebarExpanded" class="truncate ml-3" :class="route().current('Budget.index') || route().current('Budget.create') || route().current('Budget.edit') || route().current('Category.show') ? 'text-white' : ''">Budgets</span>
                         </Link>
                     </div>
                 </div>
@@ -138,11 +158,11 @@ const toggleTheme = () => {
                                 <div class="shrink-0 flex items-center">
                                     <Link :href="route('dashboard')">
                                         <div class="flex items-center gap-2">
-                                            <div class="h-8 w-8 rounded-lg bg-purple-600 flex items-center justify-center">
+                                            <div class="h-8 w-8 rounded-lg bg-emerald-600 flex items-center justify-center">
                                                 <CashIcon class="h-4 w-4 text-white" />
                                             </div>
                                             <span class="text-lg font-bold text-gray-900 dark:text-white">
-                                                Spend<span class="text-purple-600">Track</span>
+                                                Spend<span class="text-emerald-600">Track</span>
                                             </span>
                                         </div>
                                     </Link>
@@ -183,6 +203,10 @@ const toggleTheme = () => {
                             <ResponsiveNavLink :href="route('Category.index')"
                                 :active="route().current('Category.index')">
                                 Category
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('Budget.index')"
+                                :active="route().current('Budget.index')">
+                                Budget
                             </ResponsiveNavLink>
                         </div>
                         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-700">

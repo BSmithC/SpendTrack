@@ -15,8 +15,8 @@ class Budget extends Model
         'status',
     ];
 
-    public function Details()
+    public function details()
     {
-        return $this->belongsTo(BudgetDetail::class);
+        return $this->hasMany(BudgetDetail::class);
     }
 }

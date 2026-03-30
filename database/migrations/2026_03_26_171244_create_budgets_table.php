@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('type');
-            $table->decimal('amount_of_payments');
-            $table->decimal('initial');
+            $table->decimal('amount_of_payments')->nullable();
+            $table->decimal('initial')->nullable();
             $table->decimal('total');
             $table->boolean('status')->default(true);
             $table->timestamps();

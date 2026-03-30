@@ -2,17 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\budgtes;
+use App\Models\Budget;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class BudgetController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Budget::query();
 
+        if ($request->filled('search')) {
+            $query->where(function ($q) {
+                $q->where('');
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where($request->status);
+        }
+
+        $budgets = $query->latest()->paginate(10);
+
+        return Inertia::render('Budget/index', [
+            'budgets' => $budgets,
+            'filter' => $request->only(['search', 'status']),
+        ]);
     }
 
     /**
@@ -20,7 +39,7 @@ class BudgetController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Budget/create');
     }
 
     /**
@@ -28,7 +47,35 @@ class BudgetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'type' => 'required|string',
+            'amount_of_payments' => 'nullable|numeric',
+            'initial' => 'nullable|numeric',
+            'total' => 'required|numeric',
+            'status' => 'required|boolean',
+            'details.*.amount' => 'required|numeric',
+            'details.*.quantity' => 'required|numeric',
+        ]);
+
+        $budget = Budget::create([
+            'user_id' => Auth::id(),
+            'type' => $validated['type'],
+            'amount_of_payments' => $validated['amount_of_payments'],
+            'initial' => $validated['initial'],
+            'total' => $validated['total'],
+            'status' => $validated['status'],
+        ]);
+
+        foreach ($validated['details'] as $detail) {
+            $budget->details()->create([
+                'budget_id' => $budget->id,
+                'amount' => $detail['amount'],
+                'total' => $detail['amount'] * $detail['quantity'],
+                'quantity' => $detail['quantity'],
+            ]);
+        }
+
+        return redirect()->route('Budget.index');
     }
 
     /**
@@ -36,7 +83,11 @@ class BudgetController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $budget = Budget::find($id);
+
+        return Inertia::render('Budget/show', [
+            'budget' => $budget,
+        ]);
     }
 
     /**
@@ -60,6 +111,8 @@ class BudgetController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $budget = Budget::find($id);
+        $budget->status = 0;
+        $budget->save();
     }
 }
