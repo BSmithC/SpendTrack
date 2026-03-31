@@ -54,6 +54,7 @@ class ExpenseController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
+            'price' => 'required|numeric',
         ]);
         Expense::create($validated);
         return redirect()->route('Expense.index');
@@ -88,6 +89,7 @@ class ExpenseController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
+            'price' => 'required|numeric',
         ]);
         $expense = Expense::find($id);
         $expense->update($validated);

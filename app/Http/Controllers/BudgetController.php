@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Budget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class BudgetController extends Controller
@@ -26,7 +27,7 @@ class BudgetController extends Controller
             $query->where($request->status);
         }
 
-        $budgets = $query->latest()->paginate(10);
+        $budgets = $query->with('details')->latest()->paginate(10);
 
         return Inertia::render('Budget/index', [
             'budgets' => $budgets,
@@ -53,6 +54,7 @@ class BudgetController extends Controller
             'initial' => 'nullable|numeric',
             'total' => 'required|numeric',
             'status' => 'required|boolean',
+            'details.*.name' => 'required|string|max:255',
             'details.*.amount' => 'required|numeric',
             'details.*.quantity' => 'required|numeric',
         ]);
@@ -69,13 +71,14 @@ class BudgetController extends Controller
         foreach ($validated['details'] as $detail) {
             $budget->details()->create([
                 'budget_id' => $budget->id,
+                'name' => $detail['name'],
                 'amount' => $detail['amount'],
                 'total' => $detail['amount'] * $detail['quantity'],
                 'quantity' => $detail['quantity'],
             ]);
         }
 
-        return redirect()->route('Budget.index');
+        return redirect()->route('Budget.index')->with('success', 'Se guardado correctamente');
     }
 
     /**

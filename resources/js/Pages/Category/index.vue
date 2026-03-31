@@ -4,7 +4,7 @@
             <div v-if="flash?.success" class="bg-green-800 text-white p-5 rounded mb-2">
                 {{ flash.success }}
             </div>
-            <h2 class="text-lg text-gray-900">
+            <h2 class="text-xl font-semibold">
                 Categories
             </h2>
             <Button class="ml-auto text-gray-700 bg-gray-50 border-b-2 border-gray-200">
@@ -33,9 +33,6 @@
                                     Description
                                 </th>
                                 <th scope="col" class="px-6 py-3 font-medium">
-                                    Type
-                                </th>
-                                <th scope="col" class="px-6 py-3 font-medium">
                                     Status
                                 </th>
                                 <th scope="col" class="px-6 py-3 font-medium">
@@ -53,9 +50,6 @@
                                 </td>
                                 <td class="p-3 text-sm text-gray-700">
                                     {{ category.description }}
-                                </td>
-                                <td class="p-3 text-sm text-gray-700">
-                                    {{ category.type }}
                                 </td>
                                 <td class="p-3 text-sm text-gray-700">
                                     <span class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium"

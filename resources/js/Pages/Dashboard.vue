@@ -4,14 +4,15 @@ import { App, Head } from '@inertiajs/vue3'
 import { computed } from 'vue'
 
 const props = defineProps({
+    expense_total: Object,
     kpis: Object,
 })
-const series = computed(() => [{
-    data: props.expensesByCategory.map(item => ({
-        x: item.category,
-        y: item.total
-    }))
-}])
+// const series = computed(() => [{
+//     data: props.expensesByCategory.map(item => ({
+//         x: item.category,
+//         y: item.total
+//     }))
+// }])
 const chartOptions = computed(() => ({
     chart: {
         type: 'bar',
@@ -84,6 +85,7 @@ const formatCurrency = (value) => {
                             Total Expenses
                         </p>
                         <p class="text-2xl font-bold text-green-900 dark:text-white">
+                            {{ expense_total }}
                         </p>
                     </div>
 

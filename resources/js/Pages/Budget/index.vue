@@ -5,7 +5,7 @@
                 {{ flash.success }}
             </div>
             <h2 class="text-xl font-semibold">
-                budgets
+                Budgets
             </h2>
             <Button class="ml-auto text-gray-700 bg-gray-50 border-b-2 border-gray-200">
                 <Link :href="route('Budget.create')">
@@ -27,7 +27,13 @@
                                     ID
                                 </th>
                                 <th scope="col" class="px-6 py-3 font-medium">
+                                    Product/Service
+                                </th>
+                                <th scope="col" class="px-6 py-3 font-medium">
                                     Type
+                                </th>
+                                <th scope="col" class="px-6 py-3 font-medium">
+                                    Create At
                                 </th>
                                 <th scope="col" class="px-6 py-3 font-medium">
                                     Total
@@ -40,13 +46,19 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody v-for="budget in budgets.data" :key="budget.id">
+                        <tbody v-for="budget in budgets.data" :key="budget.data">
                             <tr class="bg-white">
                                 <th class="p-3 text-sm text-gray-700">
                                     {{ budget.id }}
                                 </th>
                                 <td class="p-3 text-sm text-gray-700">
+                                    {{ truncateNames(budget.details, 3) }}
+                                </td>
+                                <td class="p-3 text-sm text-gray-700">
                                     {{ budget.type }}
+                                </td>
+                                <td class="p-3 text-sm text-gray-700">
+                                    {{ budget.created_at.slice(0, 10) }}
                                 </td>
                                 <td class="p-3 text-sm text-gray-700">
                                     {{ budget.total }}
@@ -169,6 +181,17 @@ export default {
         }
     },
     methods: {
+        truncateNames(items, limit = 3, separator = ', ') {
+            if (!items || !Array.isArray(items) || items.length === 0) {
+                return '';
+            }
+            const names = items
+                .slice(0, limit)
+                .map(item => item.name || item)
+                .join(separator);
+
+            return items.length > limit ? `${names}...` : names;
+        },
         sumbitFilters() {
             if (!this.searchTerm) return this.budgets
             this.filteredExpenses = this.budgets.filter(e =>

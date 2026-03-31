@@ -4,6 +4,7 @@ use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Expense;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,7 +20,12 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
 
+    $expense_total = Expense::where('status', true)->count();
+
+
+
     return Inertia::render('Dashboard', [
+        'expense_total' => $expense_total
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

@@ -8,6 +8,7 @@ class BudgetDetail extends Model
 {
     protected $fillable = [
         'budget_id',
+        'name',
         'amount',
         'total',
         'quantity',

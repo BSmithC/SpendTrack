@@ -33,6 +33,9 @@
                                     Description
                                 </th>
                                 <th scope="col" class="px-6 py-3 font-medium">
+                                    Price
+                                </th>
+                                <th scope="col" class="px-6 py-3 font-medium">
                                     Created At
                                 </th>
                                 <th scope="col" class="px-6 py-3 font-medium">
@@ -53,6 +56,9 @@
                                 </td>
                                 <td class="p-3 text-sm text-gray-700">
                                     {{ expense.description }}
+                                </td>
+                                <td class="p-3 text-sm text-gray-700">
+                                    {{ expense.price }}
                                 </td>
                                 <td class="p-3 text-sm text-gray-700">
                                     {{ expense.created_at.slice(0, 10) }}

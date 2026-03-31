@@ -13,13 +13,13 @@
                     <div class="grid grid-cols-4 gap-4">
 
                         <div>
-                            <Label class="text-foreground">Tipo de Factura<span class="text-red-500"> *</span> </Label>
+                            <Label class="text-foreground">...<span class="text-red-500"> *</span> </Label>
                             <Select v-model="form.type">
                                 <SelectTrigger class="w-full ">
                                     <SelectValue placeholder="Contado" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="Contado">Contado</SelectItem>
+                                    <SelectItem value="Contado">...</SelectItem>
                                     <SelectItem v-if="form.client_id != 1" value="Crédito">Crédito</SelectItem>
                                 </SelectContent>
                             </Select>
@@ -33,7 +33,7 @@
 
                         <div class="p-6">
                             <Button type="button" @click="addDetail()">
-                                Agregar Productos
+                                Add Product/Service
                             </Button>
                         </div>
                     </div>
@@ -43,9 +43,9 @@
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Producto</TableHead>
-                                <TableHead class="text-center">Precio</TableHead>
-                                <TableHead class="text-center">Cantidad</TableHead>
+                                <TableHead>Product/Service</TableHead>
+                                <TableHead class="text-center">Price</TableHead>
+                                <TableHead class="text-center">Quantity</TableHead>
                                 <TableHead class="text-center">Acción</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -114,7 +114,7 @@
             <DialogContent class=" bg-background text-foreground border-border shadow-lg">
                 <DialogHeader>
                     <DialogTitle class="text-foreground">Cuentas por Cobrar</DialogTitle>
-                </DialogHeader>
+                </DialogHeader>>
 
                 <div class="py-4 space-y-4">
 
@@ -297,6 +297,7 @@ export default {
 
             this.form.details = this.form.details.map(detail => ({
                 budget_id: detail.budget_id,
+                name: detail.name,
                 amount: detail.unitary_price,
                 quantity: detail.quantity,
                 total: detail.unitary_price * detail.quantity

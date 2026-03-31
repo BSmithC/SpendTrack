@@ -79,7 +79,7 @@ onMounted(() => {
                                 <span class="animate-ping absolute h-full w-full rounded-full bg-emerald-400"></span>
                                 <span class="relative h-2 w-2 rounded-full bg-emerald-500"></span>
                             </span>
-                            <span class="text-xs font-medium text-emerald-700">Plataforma líder</span>
+                            <span class="text-xs font-medium text-emerald-700">Plataforma Tuya</span>
                         </div>
 
                         <h1 class="text-4xl lg:text-5xl font-bold tracking-tight">

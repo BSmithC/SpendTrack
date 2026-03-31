@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('budget_id');
             $table->decimal('amount');
+            $table->string('name');
             $table->decimal('total');
             $table->decimal('quantity');
             $table->boolean('status')->default(true);

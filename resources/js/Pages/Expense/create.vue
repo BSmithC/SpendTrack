@@ -1,7 +1,7 @@
 <template>
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-lg text-gray-800">
+            <h2 class="text-xl font-semibold">
                 Create Expense
             </h2>
         </template>
@@ -10,7 +10,7 @@
                 <form @submit.prevent="submit">
                     <div class="rounded-xl border-foregroundbg-background p-6 space-y-6">
 
-                        <div class="grid grid-cols-1 gap-4">
+                        <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <Label for="name">Name<span class="text-red-500"> *</span></Label>
                                 <Input id="name" v-model="form.name" type="text" placeholder="Name" />
@@ -18,12 +18,19 @@
                             </div>
 
                             <div>
-                                <Label for="description">Description<span class="text-red-500"> *</span></Label>
-                                <Textarea id="description" v-model="form.description" type="text"
-                                    placeholder="Detalles de la description..." />
+                                <Label for="Price">Price<span class="text-red-500"> *</span></Label>
+                                <Input id="Price" v-model="form.price" type="number" placeholder="0.00" />
                                 <InputError :message="form.errors.description" />
                             </div>
                         </div>
+
+                        <div>
+                            <Label for="description">Description<span class="text-red-500"> *</span></Label>
+                            <Textarea id="description" v-model="form.description" type="text"
+                                placeholder="Detalles de la description..." />
+                            <InputError :message="form.errors.description" />
+                        </div>
+
                     </div>
 
                     <div class="mt-6 flex items-center justify-end gap-x-6">
@@ -67,6 +74,7 @@ export default {
             form: useForm({
                 name: '',
                 description: '',
+                price: 0,
             })
         };
     },
