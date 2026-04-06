@@ -19,8 +19,7 @@
 
                             <div>
                                 <Label for="type">Type<span class="text-red-500"> *</span></Label>
-                                <Input id="type" v-model="form.type" type="text"
-                                    placeholder="Type..." />
+                                <Input id="type" v-model="form.type" type="text" placeholder="Type..." />
                                 <InputError :message="form.errors.description" />
                             </div>
                         </div>
@@ -33,13 +32,13 @@
                     </div>
 
                     <div class="mt-6 flex items-center justify-end gap-x-6">
-                        <Button class="bg-gray-100" type="submit">
-                            Save
-                        </Button>
-                        <Button class="bg-gray-100">
+                        <Button variant="outline" as-child>
                             <Link :href="route('Category.index')">
                             Cancel
                             </Link>
+                        </Button>
+                        <Button variant="outline" as-child type="submit">
+                            Save
                         </Button>
                     </div>
                 </form>

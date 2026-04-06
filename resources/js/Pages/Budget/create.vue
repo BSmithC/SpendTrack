@@ -102,6 +102,7 @@
                 <Button variant="outline" as-child>
                     <Link href="/Budget">Cancel</Link>
                 </Button>
+
                 <Button variant="outline" type="button" :disabled="!form.details.length || form.processing"
                     @click="submit">
                     Save Budget

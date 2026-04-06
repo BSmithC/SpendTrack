@@ -4,6 +4,7 @@ use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Category;
 use App\Models\Expense;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -19,13 +20,25 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    $expense_total = Expense::where('status', true)->sum('price');
+    $expense_count = Expense::where('status', true)->count();
+    $categories_count = Category::count();
+    $expenses_this_month = Expense::where('status', true)
+        ->whereMonth('created_at', now()->month)
+        ->sum('price');
 
-    $expense_total = Expense::where('status', true)->count();
-
-
+    $expenses_by_category = Expense::where('status', true)
+        ->with('category')
+        ->get()
+        ->groupBy('category.name')
+        ->map(fn ($items) => $items->sum('price'));
 
     return Inertia::render('Dashboard', [
-        'expense_total' => $expense_total
+        'expense_total' => $expense_total,
+        'expense_count' => $expense_count,
+        'categories_count' => $categories_count,
+        'expenses_this_month' => $expenses_this_month,
+        'expenses_by_category' => $expenses_by_category,
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

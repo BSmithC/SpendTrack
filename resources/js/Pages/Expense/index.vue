@@ -16,9 +16,6 @@
 
         <template #default>
             <div class="mx-auto max-w-7xl justify-center py-10">
-                <div>
-
-                </div>
                 <div class="overflow-auto rounded-xl shadow">
                     <table class="w-full">
                         <thead class="bg-gray-50 border-b-2 border-gray-200">
@@ -34,6 +31,9 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3 font-medium">
                                     Price
+                                </th>
+                                <th scope="col" class="px-6 py-3 font-medium">
+                                    Category
                                 </th>
                                 <th scope="col" class="px-6 py-3 font-medium">
                                     Created At
@@ -61,6 +61,9 @@
                                     {{ expense.price }}
                                 </td>
                                 <td class="p-3 text-sm text-gray-700">
+                                    {{ expense.name }}
+                                </td>
+                                <td class="p-3 text-sm text-gray-700">
                                     {{ expense.created_at.slice(0, 10) }}
                                 </td>
                                 <td class="p-3 text-sm text-gray-700">
@@ -80,6 +83,11 @@
                                     <Button class="text-yellow-500">
                                         <Link :href="route('Expense.edit', expense.id)">
                                         <EditIcon />
+                                        </Link>
+                                    </Button>
+                                    <Button class="text-red-500">
+                                        <Link :href="route('Expense.destroy', expense.id)" method="delete">
+                                        <DeleteIcon />
                                         </Link>
                                     </Button>
                                 </td>
@@ -144,8 +152,10 @@
 
 <script>
 import AddIcon from '@/Components/Icons/AddIcon.vue';
+import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import EditIcon from '@/Components/Icons/EditIcon.vue';
 import EyeIcon from '@/Components/Icons/EyeIcon.vue';
+import RestoreIcon from '@/Components/Icons/RestoreIcon.vue';
 import Button from '@/Components/ui/button/Button.vue';
 import { Pagination } from '@/Components/ui/pagination';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
@@ -160,7 +170,9 @@ export default {
         Button,
         EyeIcon,
         AddIcon,
-        Pagination
+        Pagination,
+        DeleteIcon,
+        RestoreIcon
     },
     props: {
         expenses: Object,

@@ -15,11 +15,11 @@ class Expense extends Model
         'date',
         'status',
     ];
-    public function User()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function Category()
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }

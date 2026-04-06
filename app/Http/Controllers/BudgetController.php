@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Budget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class BudgetController extends Controller
@@ -86,7 +85,7 @@ class BudgetController extends Controller
      */
     public function show(string $id)
     {
-        $budget = Budget::find($id);
+        $budget = Budget::with('details')->find($id);
 
         return Inertia::render('Budget/show', [
             'budget' => $budget,

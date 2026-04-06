@@ -60,17 +60,12 @@
                                     </span>
                                 </td>
                                 <td class="p-3 text-sm text-gray-700">
-                                    <Button class="text-blue-500" variant="default">
-                                        <Link :href="route('Category.show', category.id)">
-                                        <EyeIcon />
-                                        </Link>
-                                    </Button>
                                     <Button class="text-yellow-500">
                                         <Link :href="route('Category.edit', category.id)">
                                         <EditIcon />
                                         </Link>
                                     </Button>
-                                    <Button class="text-red-500">
+                                    <Button @click="deleteCategory(category.id)" class="text-red-500">
                                         <DeleteIcon />
                                     </Button>
                                 </td>
@@ -170,6 +165,11 @@ export default {
         }
     },
     methods: {
+        deleteCategory(id) {
+            if (confirm('Are you sure?')) {
+                this.$inertia.delete(route('Category.destroy', id));
+            }
+        },
         sumbitFilters() {
             if (!this.searchTerm) return this.categories
             this.filteredExpenses = this.categories.filter(e =>

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Expense;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-
-use function Illuminate\Log\log;
 
 class ExpenseController extends Controller
 {
@@ -30,7 +28,7 @@ class ExpenseController extends Controller
             $query->where('status', $request->status);
         }
 
-        $expense = $query->latest()->paginate(10);
+        $expense = $query->with('category')->latest()->paginate(10);
 
         return Inertia::render('Expense/index', [
             'expenses' => $expense,
@@ -43,7 +41,9 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Expense/create');
+        $categories = Category::all();
+
+        return Inertia::render('Expense/create', compact('categories'));
     }
 
     /**
@@ -52,11 +52,13 @@ class ExpenseController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'price' => 'required|numeric',
         ]);
         Expense::create($validated);
+
         return redirect()->route('Expense.index');
     }
 
@@ -66,6 +68,7 @@ class ExpenseController extends Controller
     public function show(string $id)
     {
         $expense = Expense::find($id);
+
         return Inertia::render('Expense/show', ['expense' => $expense]);
     }
 
@@ -74,10 +77,12 @@ class ExpenseController extends Controller
      */
     public function edit(string $id)
     {
-        $expense = Expense::find($id);
+        $expense = Expense::findOrFail($id);
+        $categories = Category::all();
 
         return Inertia::render('Expense/edit', [
             'expense' => $expense,
+            'categories' => $categories,
         ]);
     }
 
@@ -87,11 +92,12 @@ class ExpenseController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
+            'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'price' => 'required|numeric',
         ]);
-        $expense = Expense::find($id);
+        $expense = Expense::findOrFail($id);
         $expense->update($validated);
 
         return redirect()->route('Expense.index');
@@ -104,5 +110,7 @@ class ExpenseController extends Controller
     {
         $expense = Expense::findOrFail($id);
         $expense->delete();
+
+        return redirect()->route('Expense.index')->with('success', 'Expense deleted successfully');
     }
 }

@@ -13,7 +13,7 @@ class Category extends Model
         'type',
         'status',
     ];
-    public function Expense()
+    public function expenses()
     {
         return $this->hasMany(Expense::class);
     }
