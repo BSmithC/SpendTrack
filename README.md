@@ -38,7 +38,7 @@
 <br />
 
 <p align="center">
-    <img src="">
+    <img src="DashboardSpendTrack.png">
 </p>
 
 ---
