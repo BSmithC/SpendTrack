@@ -1,72 +1,79 @@
-<p align="center">
-    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="200" alt="Laravel Logo">
-    <img src="https://raw.githubusercontent.com/vuejs/art/master/logo.svg" width="200" alt="Vue.js Logo">
-</p>
+<div align="center">
+  <h1>💰 SpendTrack</h1>
+  <p><strong>Personal Expense Management System</strong></p>
+  <p>Take control of your finances with elegance and simplicity</p>
 
-<p align="center">
-    <h1 align="center">SpendTrack</h1>
-    <p align="center">Personal Expense Management System</p>
-</p>
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![Unlicense License][license-shield]][license-url]
+</div>
 
-<p align="center">
-    <a href="#">
-        <img src="https://img.shields.io/badge/Laravel-11.x-red.svg" alt="Laravel Version">
-    </a>
-    <a href="#">
-        <img src="https://img.shields.io/badge/Vue.js-3.x-green.svg" alt="Vue.js Version">
-    </a>
-    <a href="#">
-        <img src="https://img.shields.io/badge/Inertia.js-Latest-blue.svg" alt="Inertia.js">
-    </a>
-    <a href="#">
-        <img src="https://img.shields.io/badge/TailwindCSS-3.x-cyan.svg" alt="Tailwind CSS">
-    </a>
-    <a href="#">
-        <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License">
-    </a>
-</p>
+---
 
-## About SpendTrack
+## 📋 Table of Contents
 
-**SpendTrack** is a modern, elegant personal expense management system built with Laravel and Vue.js. It helps you track, analyze, and optimize your spending habits with an intuitive dashboard and real-time insights.
+- [About The Project](#about-the-project)
+- [Built With](#built-with)
+- [Getting Started](#getting-started)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgments](#acknowledgments)
 
-### Key Features
+---
 
-- ✅ **Expense Tracking** - Log and categorize your daily expenses
-- ✅ **Budget Management** - Set monthly budgets and track progress
-- ✅ **Category Analytics** - Visualize spending by category
-- ✅ **Real-time Dashboard** - Interactive charts and KPIs
-- ✅ **User Authentication** - Secure login with email verification
-- ✅ **Profile Management** - Update personal information and password
-- ✅ **Responsive Design** - Works seamlessly on desktop and mobile
-- ✅ **Dark Mode Support** - Comfortable viewing in any environment
+## About The Project
 
-## Technology Stack
+<div align="center">
+  <img src="https://via.placeholder.com/800x400?text=SpendTrack+Dashboard" alt="SpendTrack Screenshot">
+</div>
 
-### Backend
-- **Laravel 11.x** - PHP Framework
-- **MySQL** - Database
-- **Inertia.js** - Server-side routing
-- **Eloquent ORM** - Database interactions
+**SpendTrack** is a modern, elegant personal expense management system that helps you track, analyze, and optimize your spending habits. Built with Laravel and Vue.js, it provides real-time insights through an intuitive dashboard and powerful analytics.
 
-### Frontend
-- **Vue.js 3** - JavaScript Framework
-- **TailwindCSS** - Utility-first CSS
-- **ApexCharts** - Interactive data visualization
-- **Vue Router** - Client-side routing
+**Why SpendTrack?**
 
-## Requirements
+- Your time should be focused on managing finances, not struggling with complex tools
+- Real-time data visualization helps you make informed decisions
+- Clean, intuitive interface that works for everyone
+- Open source and completely customizable
 
-- PHP >= 8.1
-- Composer
-- Node.js >= 18
-- NPM or Yarn
-- MySQL >= 5.7
+Of course, everyone's financial needs are different. So I'll be adding more features in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue.
 
-## Installation
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-### Step 1: Clone the repository
+---
 
-```bash
-git clone https://github.com/yourusername/spendtrack.git
-cd spendtrack
+### Built With
+
+**SpendTrack** is built with modern technologies:
+
+| Category | Technologies |
+|----------|--------------|
+| **Backend** | Laravel 11.x, PHP 8.1+ |
+| **Frontend** | Vue.js 3, Inertia.js |
+| **Styling** | TailwindCSS |
+| **Database** | MySQL, Eloquent ORM |
+| **Charts** | ApexCharts |
+| **Auth** | Laravel Breeze / Jetstream |
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Getting Started
+
+To get a local copy up and running, follow these simple steps.
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- **PHP** >= 8.1
+  ```bash
+  php -v
