@@ -95,8 +95,8 @@ composer install
 # 3. Install JavaScript dependencies
 npm install
 
-# 4. Create environment file
-cp .env.example .env
+# 4. Edit environment file
+.env.example --> .env
 
 # 5. Generate application key
 php artisan key:generate
