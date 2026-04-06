@@ -38,7 +38,7 @@
 <br />
 
 <p align="center">
-    <img src="https://via.placeholder.com/900x450?text=SpendTrack+Dashboard" alt="Dashboard Preview" width="85%" style="border-radius: 16px; box-shadow: 0 25px 40px -12px rgba(0,0,0,0.25);">
+    <img src="">
 </p>
 
 ---
@@ -86,7 +86,7 @@ Follow these steps to set up SpendTrack locally:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/spendtrack.git
+git clone https://github.com/BSmithC/spendtrack.git
 cd spendtrack
 
 # 2. Install PHP dependencies
