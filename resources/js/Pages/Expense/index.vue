@@ -85,10 +85,8 @@
                                         <EditIcon />
                                         </Link>
                                     </Button>
-                                    <Button class="text-red-500">
-                                        <Link :href="route('Expense.destroy', expense.id)" method="delete">
+                                    <Button @click="deleteinfo(expense.id)" class="text-red-500">
                                         <DeleteIcon />
-                                        </Link>
                                     </Button>
                                 </td>
                             </tr>
@@ -190,6 +188,11 @@ export default {
         }
     },
     methods: {
+        deleteinfo(id) {
+            if (confirm('Are you sure?')) {
+                this.$inertia.delete(route('Expense.destroy', id));
+            }
+        },
         sumbitFilters() {
             if (!this.searchTerm) return this.expenses
             this.filteredExpenses = this.expenses.filter(e =>

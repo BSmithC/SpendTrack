@@ -65,7 +65,7 @@
                                         <EditIcon />
                                         </Link>
                                     </Button>
-                                    <Button @click="deleteCategory(category.id)" class="text-red-500">
+                                    <Button @click="deleteinfo(category.id)" class="text-red-500">
                                         <DeleteIcon />
                                     </Button>
                                 </td>
@@ -165,7 +165,7 @@ export default {
         }
     },
     methods: {
-        deleteCategory(id) {
+        deleteinfo(id) {
             if (confirm('Are you sure?')) {
                 this.$inertia.delete(route('Category.destroy', id));
             }

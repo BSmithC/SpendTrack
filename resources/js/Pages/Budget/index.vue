@@ -77,12 +77,8 @@
                                         <EyeIcon />
                                         </Link>
                                     </Button>
-                                    <Button v-if="budget.status" variant="destructive" class="text-red-500"
-                                        @click="confirmDelete(budget.id)">
+                                    <Button @click="deleteinfo(budget.id)" class="text-red-500">
                                         <DeleteIcon />
-                                    </Button>
-                                    <Button v-else class="text-green-500" @click="Restore(budget.id)">
-                                        <RestoreIcon />
                                     </Button>
                                 </td>
                             </tr>
@@ -200,13 +196,10 @@ export default {
                     .includes(this.searchTerm.toLocaleLowerCase())
             );
         },
-        confirmDelete(id) {
-            this.selectedId = id;
-        },
-        Restore(id) {
-            router.put(`/Budget/${id}`, { active: true },
-                { preserveScroll: true, }
-            )
+        deleteinfo(id) {
+            if (confirm('Are you sure?')) {
+                this.$inertia.delete(route('Budget.destroy', id));
+            }
         },
     },
 }

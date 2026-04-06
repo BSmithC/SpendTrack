@@ -37,7 +37,7 @@
                             Cancel
                             </Link>
                         </Button>
-                        <Button variant="outline" as-child type="submit">
+                        <Button variant="outline" type="submit">
                             Save
                         </Button>
                     </div>
