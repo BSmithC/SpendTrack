@@ -6,12 +6,20 @@ use App\Models\Budget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class BudgetController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+public function generatereport()
+{
+$data = [];
+$pdf = Pdf::viewload();
+return $pdf->($data);
+}
+
     public function index(Request $request)
     {
         $query = Budget::query();

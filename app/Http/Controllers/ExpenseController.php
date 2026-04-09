@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Category;
 use App\Models\Expense;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class ExpenseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function generateReport()
+    {
+        $data = [];
+        $pdf = Pdf::loadView('',$data);
+        return $pdf->download();
+    }
     public function index(Request $request)
     {
         $query = Expense::query();
@@ -68,6 +76,7 @@ class ExpenseController extends Controller
     public function show(string $id)
     {
         $expense = Expense::find($id);
+        $expense->load('category');
 
         return Inertia::render('Expense/show', ['expense' => $expense]);
     }

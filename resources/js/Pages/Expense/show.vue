@@ -69,7 +69,7 @@
                                     <span class="text-sm font-medium text-gray-500">Category</span>
                                 </div>
                                 <div class="w-2/3">
-                                    <span class="text-sm text-gray-900">{{ expense.category?.name || 'N/A' }}</span>
+                                    <span class="text-sm text-gray-900">{{ expense.category.name || 'N/A' }}</span>
                                 </div>
                             </div>
 
