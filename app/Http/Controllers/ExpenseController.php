@@ -2,24 +2,18 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Category;
 use App\Models\Expense;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Spatie\LaravelPdf\Facades\Pdf;
 
 class ExpenseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function generateReport()
-    {
-        $data = [];
-        $pdf = Pdf::loadView('',$data);
-        return $pdf->download();
-    }
+    public function generateReport() {}
+
     public function index(Request $request)
     {
         $query = Expense::query();
@@ -33,14 +27,16 @@ class ExpenseController extends Controller
         }
 
         if ($request->filled('status')) {
-            $query->where('status', $request->status);
+            if ($request->status != 'all') {
+                $query->where('status', $request->status);
+            }
         }
 
         $expense = $query->with('category')->latest()->paginate(10);
 
         return Inertia::render('Expense/index', [
             'expenses' => $expense,
-            'filled' => $request->only(['search', 'status']),
+            'filters' => $request->only(['search', 'status']),
         ]);
     }
 

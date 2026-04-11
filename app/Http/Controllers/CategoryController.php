@@ -21,12 +21,17 @@ class CategoryController extends Controller
         }
 
         if ($request->filled('status')) {
-            $query = $query->where('status', $request->status);
+            if ($request->status != 'all') {
+                $query->where('status', $request->status);
+            }
         }
 
         $categories = $query->paginate(10);
 
-        return Inertia::render('Category/index', ['categories' => $categories]);
+        return Inertia::render('Category/index', [
+            'categories' => $categories,
+            'filters' => $request->only(['search','status']),
+            ]);
     }
 
     /**
@@ -101,6 +106,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
+
         return redirect()->route('Category.index')->with('success', 'Category deleted successfully');
     }
 }

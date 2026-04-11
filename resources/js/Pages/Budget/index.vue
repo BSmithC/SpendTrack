@@ -12,17 +12,25 @@
                 New Budget
                 </Link>
             </Button>
-            <Button class="">
-
-            </Button>
         </template>
 
         <template #default>
-            <div class="mx-auto max-w-7xl justify-center py-10">
-                <div>
-
+            <div class="mx-auto max-w-7xl justify-center mt-4">
+                <div class="flex justify-between w-full ">
+                    <Input class="sm:max-w-sm" v-model="form.search" @input="sumbitFilters()" placeholder="Search ..." />
+                    <Select v-model="form.status" @update:model-value="sumbitFilters()" >
+                        <SelectTrigger class="w-full sm:w-48">
+                            <SelectValue placeholder="Estado" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">Todos</SelectItem>
+                            <SelectItem value="1">Activos</SelectItem>
+                            <SelectItem value="0">Inactivos</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
-                <div class="overflow-auto rounded-xl shadow">
+
+                <div class="overflow-auto rounded-xl shadow mt-4">
                     <table class="w-full">
                         <thead class="bg-gray-50 border-b-2 border-gray-200">
                             <tr class="p-3 text-sm font-semibold tracking-wider text-left">
@@ -153,6 +161,12 @@ import Button from '@/Components/ui/button/Button.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { KeepAlive, ref } from 'vue';
+import Input from '@/Components/ui/input/Input.vue';
+import Select from '@/Components/ui/select/Select.vue';
+import SelectTrigger from '@/Components/ui/select/SelectTrigger.vue';
+import SelectValue from '@/Components/ui/select/SelectValue.vue';
+import SelectContent from '@/Components/ui/select/SelectContent.vue';
+import SelectItem from '@/Components/ui/select/SelectItem.vue';
 export default {
     components: {
         AuthenticatedLayout,
@@ -163,15 +177,27 @@ export default {
         EyeIcon,
         AddIcon,
         DeleteIcon,
-        RestoreIcon
+        RestoreIcon,
+        Input,
+        Select,
+        SelectTrigger,
+        SelectValue,
+        SelectContent,
+        SelectItem,
     },
     props: {
         budgets: Object,
+        filters: Object,
     },
     data() {
         return {
             searchTerm: ref(''),
-            filteredExpenses: this.budgets
+            filteredExpenses: this.budgets,
+            form: {
+                search: this.filters?.search || '',
+                status: this.filters?.status || ''
+            },
+            timeout: null
         }
     },
     computed: {
@@ -192,12 +218,15 @@ export default {
             return items.length > limit ? `${names}...` : names;
         },
         sumbitFilters() {
-            if (!this.searchTerm) return this.budgets
-            this.filteredExpenses = this.budgets.filter(e =>
-                (e.title)
-                    .toLowerCase()
-                    .includes(this.searchTerm.toLocaleLowerCase())
-            );
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+                this.$inertia.get(route('Budget.index'), this.form, {
+                    preserveState: true,
+                    preserveScroll: true,
+                    replace: true
+                });
+            }, 300)
+
         },
         deleteinfo(id) {
             if (confirm('Are you sure?')) {

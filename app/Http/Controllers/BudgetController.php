@@ -6,39 +6,45 @@ use App\Models\Budget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use Spatie\LaravelPdf\Facades\Pdf;
 
 class BudgetController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-public function generatereport()
-{
-$data = [];
-$pdf = Pdf::viewload();
-return $pdf->($data);
-}
+    public function generatereport() {}
 
     public function index(Request $request)
     {
-        $query = Budget::query();
+        $query = Budget::query()->with(['details']);
 
         if ($request->filled('search')) {
-            $query->where(function ($q) {
-                $q->where('');
-            });
+            if ($request->filled('search')) {
+                $search = $request->search;
+
+                $query->where(function ($q) use ($search) {
+                    $q->where('total', 'like', "%{$search}%")
+                        ->orWhere('created_at', 'like', "%{$search}%")
+                        ->orWhere('type', 'like', "%{$search}%")
+                        ->orWhereHas('details', function ($q) use ($search) {
+                            $q->where('name', 'like', "%{$search}%")
+                                ->orWhere('amount', 'like', "%{$search}%");
+                        });
+                });
+            }
         }
 
         if ($request->filled('status')) {
-            $query->where($request->status);
+            if ($request->status != 'all') {
+                $query->where('status', $request->status);
+            }
         }
 
         $budgets = $query->with('details')->latest()->paginate(10);
 
         return Inertia::render('Budget/index', [
             'budgets' => $budgets,
-            'filter' => $request->only(['search', 'status']),
+            'filters' => $request->only(['search', 'status']),
         ]);
     }
 
